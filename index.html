@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AAMIN PROFESSIONAL PDF STUDIO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="logo-3d">
+        <span>AAMIN</span>
+    </div>
+
+    <h2 class="studio">PROFESSIONAL PDF STUDIO</h2>
+    <p>Create • Combine • Convert Images into A4 PDF</p>
+
+    <div class="drop-area" id="dropArea">
+        <p>Drag & Drop Images Here</p>
+        <input type="file" id="fileInput" multiple accept="image/*">
+    </div>
+
+    <label>
+        <input type="checkbox" id="bwMode">
+        Convert to BLACK & WHITE PDF
+    </label>
+
+    <label>Crop Margin:</label>
+    <select id="cropValue">
+        <option value="0">No Crop</option>
+        <option value="10">Small Crop</option>
+        <option value="20">Medium Crop</option>
+        <option value="40">Large Crop</option>
+    </select>
+
+    <button onclick="generatePDF()">GENERATE A4 PDF</button>
+
+    <footer>
+        © 2026 AAMIN PROFESSIONAL PDF STUDIO <br>
+        DEVELOPMENT & DESIGNED BY AAMIN
+    </footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
