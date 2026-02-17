@@ -1,104 +1,73 @@
-const dropArea = document.getElementById("dropArea");
-const fileInput = document.getElementById("fileInput");
+const { jsPDF } = window.jspdf;
 
-let filesArray = [];
+let folders = JSON.parse(localStorage.getItem("folders")) || [];
 
-dropArea.addEventListener("dragover", (e) => {
-    e.preventDefault();
-});
-
-dropArea.addEventListener("drop", (e) => {
-    e.preventDefault();
-    filesArray = [...e.dataTransfer.files];
-});
-
-fileInput.addEventListener("change", () => {
-    filesArray = [...fileInput.files];
-});
-
-async function generatePDF() {
-
-    if (filesArray.length === 0) {
-        alert("Upload at least one image!");
-        return;
-    }
-
-    const { jsPDF } = window.jspdf;
-
-    const doc = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        format: "a4"
-    });
-
-    const bwMode = document.getElementById("bwMode").checked;
-    const cropMargin = parseInt(document.getElementById("cropValue").value);
-
-    for (let i = 0; i < filesArray.length; i++) {
-
-        const file = filesArray[i];
-        const reader = new FileReader();
-
-        await new Promise((resolve) => {
-
-            reader.onload = function (e) {
-
-                const img = new Image();
-                img.src = e.target.result;
-
-                img.onload = function () {
-
-                    const canvas = document.createElement("canvas");
-                    const ctx = canvas.getContext("2d");
-
-                    const newWidth = img.width - cropMargin * 2;
-                    const newHeight = img.height - cropMargin * 2;
-
-                    canvas.width = newWidth;
-                    canvas.height = newHeight;
-
-                    ctx.drawImage(
-                        img,
-                        cropMargin,
-                        cropMargin,
-                        newWidth,
-                        newHeight,
-                        0,
-                        0,
-                        newWidth,
-                        newHeight
-                    );
-
-                    if (bwMode) {
-                        const imageData = ctx.getImageData(0, 0, newWidth, newHeight);
-                        const data = imageData.data;
-
-                        for (let j = 0; j < data.length; j += 4) {
-                            const avg = (data[j] + data[j+1] + data[j+2]) / 3;
-                            data[j] = avg;
-                            data[j+1] = avg;
-                            data[j+2] = avg;
-                        }
-
-                        ctx.putImageData(imageData, 0, 0);
-                    }
-
-                    const finalImage = canvas.toDataURL("image/jpeg", 1.0);
-
-                    if (i !== 0) doc.addPage();
-
-                    const pageWidth = doc.internal.pageSize.getWidth();
-                    const pageHeight = doc.internal.pageSize.getHeight();
-
-                    doc.addImage(finalImage, "JPEG", 0, 0, pageWidth, pageHeight);
-
-                    resolve();
-                };
-            };
-
-            reader.readAsDataURL(file);
-        });
-    }
-
-    doc.save("AAMIN_PROFESSIONAL_PDF_STUDIO.pdf");
+function saveData() {
+    localStorage.setItem("folders", JSON.stringify(folders));
+    updateStorage();
 }
+
+function createFolder() {
+    const name = document.getElementById("folderName").value;
+    if (!name) return alert("Enter folder name");
+
+    folders.push({ name: name, files: [] });
+    saveData();
+    renderFolders();
+}
+
+function renderFolders() {
+    const list = document.getElementById("folderList");
+    list.innerHTML = "";
+
+    folders.forEach((folder, i) => {
+        list.innerHTML += `
+            <div class="folder">
+                <b>${folder.name}</b><br>
+                Files: ${folder.files.length}
+            </div>
+        `;
+    });
+}
+
+function generatePDF() {
+    const input = document.getElementById("imageInput");
+    const files = input.files;
+
+    if (files.length === 0) return alert("Select images");
+
+    if (files.length > 500) return alert("Max 500 pages allowed");
+
+    const doc = new jsPDF("p","mm","a4");
+
+    Array.from(files).forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            if(index>0) doc.addPage();
+            doc.addImage(e.target.result,"JPEG",0,0,210,297);
+
+            if(index === files.length-1){
+                const pdfData = doc.output("datauristring");
+                if(folders.length === 0) {
+                    folders.push({ name:"Default", files:[] });
+                }
+                folders[0].files.push(pdfData);
+                saveData();
+                renderFolders();
+                alert("PDF Saved in Folder!");
+            }
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+function updateStorage() {
+    let total = JSON.stringify(folders).length;
+    let percent = Math.min((total / 5000000) * 100, 100);
+    document.getElementById("storageFill").style.width = percent + "%";
+    document.getElementById("storageText").innerText =
+        "Storage Used: " + percent.toFixed(2) + "%";
+}
+
+renderFolders();
+updateStorage();
