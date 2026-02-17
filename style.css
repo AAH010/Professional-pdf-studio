@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #000428, #004e92);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: white;
+}
+
+.container {
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+}
+
+.logo-3d {
+    perspective: 1000px;
+}
+
+.logo-3d span {
+    font-size: 45px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    color: #FFD700;
+    display: inline-block;
+    text-shadow:
+        1px 1px 0 #000,
+        2px 2px 0 #000,
+        3px 3px 15px rgba(0,0,0,0.6);
+    animation: float3d 3s ease-in-out infinite;
+}
+
+@keyframes float3d {
+    0% { transform: rotateX(0deg) rotateY(0deg) translateY(0); }
+    50% { transform: rotateX(10deg) rotateY(10deg) translateY(-10px); }
+    100% { transform: rotateX(0deg) rotateY(0deg) translateY(0); }
+}
+
+.studio {
+    letter-spacing: 3px;
+    color: #ccc;
+    margin-top: 5px;
+}
+
+.drop-area {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    border: 2px dashed #FFD700;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.drop-area p {
+    color: #333;
+}
+
+input, select {
+    margin: 10px 0;
+}
+
+button {
+    background: linear-gradient(90deg, #FFD700, #FF8C00);
+    color: black;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+footer {
+    margin-top: 25px;
+    font-size: 12px;
+    color: #aaa;
+}
