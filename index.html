@@ -1,50 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>AAMIN PROFESSIONAL PDF STUDIO</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
-<div class="container">
-
-    <div class="logo-3d">
-        <span>AAMIN</span>
-    </div>
-
-    <h2 class="studio">PROFESSIONAL PDF STUDIO</h2>
-    <p>Create • Combine • Convert Images into A4 PDF</p>
-
-    <div class="drop-area" id="dropArea">
-        <p>Drag & Drop Images Here</p>
-        <input type="file" id="fileInput" multiple accept="image/*">
-    </div>
-
-    <label>
-        <input type="checkbox" id="bwMode">
-        Convert to BLACK & WHITE PDF
-    </label>
-
-    <label>Crop Margin:</label>
-    <select id="cropValue">
-        <option value="0">No Crop</option>
-        <option value="10">Small Crop</option>
-        <option value="20">Medium Crop</option>
-        <option value="40">Large Crop</option>
-    </select>
-
-    <button onclick="generatePDF()">GENERATE A4 PDF</button>
-
-    <footer>
-        © 2026 AAMIN PROFESSIONAL PDF STUDIO <br>
-        DEVELOPMENT & DESIGNED BY AAMIN
-    </footer>
-
+<div class="dashboard">
+    <h1 class="logo">AAMIN PROFESSIONAL PDF STUDIO</h1>
+    <p class="tagline">Smart PDF Manager</p>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="script.js"></script>
+<div class="controls">
+    <input type="file" id="imageInput" multiple accept="image/*">
+    <input type="file" id="cameraInput" accept="image/*" capture="environment">
+    <button onclick="generatePDF()">Create PDF</button>
+</div>
 
+<div class="folder-section">
+    <input type="text" id="folderName" placeholder="New Folder Name">
+    <button onclick="createFolder()">Create Folder</button>
+</div>
+
+<div class="storage-bar">
+    <div id="storageFill"></div>
+</div>
+<p id="storageText"></p>
+
+<h2>Folders</h2>
+<div id="folderList"></div>
+
+<footer>
+    © 2026 AAMIN PROFESSIONAL PDF STUDIO <br>
+    DEVELOPMENT & DESIGNED BY AAMIN
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
