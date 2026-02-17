@@ -1,83 +1,75 @@
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #000428, #004e92);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    font-family: Arial;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
     color: white;
-}
-
-.container {
     text-align: center;
-    width: 90%;
-    max-width: 500px;
 }
 
-.logo-3d {
-    perspective: 1000px;
+.dashboard {
+    padding: 20px;
+    animation: fadeIn 1.5s ease-in-out;
 }
 
-.logo-3d span {
-    font-size: 45px;
-    font-weight: bold;
-    letter-spacing: 5px;
-    color: #FFD700;
-    display: inline-block;
-    text-shadow:
-        1px 1px 0 #000,
-        2px 2px 0 #000,
-        3px 3px 15px rgba(0,0,0,0.6);
-    animation: float3d 3s ease-in-out infinite;
+.logo {
+    font-size: 28px;
+    color: gold;
+    text-shadow: 0 0 15px gold;
 }
 
-@keyframes float3d {
-    0% { transform: rotateX(0deg) rotateY(0deg) translateY(0); }
-    50% { transform: rotateX(10deg) rotateY(10deg) translateY(-10px); }
-    100% { transform: rotateX(0deg) rotateY(0deg) translateY(0); }
+.tagline {
+    opacity: 0.8;
 }
 
-.studio {
-    letter-spacing: 3px;
-    color: #ccc;
-    margin-top: 5px;
-}
-
-.drop-area {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    border: 2px dashed #FFD700;
-    margin: 20px 0;
-    cursor: pointer;
-}
-
-.drop-area p {
-    color: #333;
-}
-
-input, select {
-    margin: 10px 0;
+.controls, .folder-section {
+    margin: 15px;
 }
 
 button {
-    background: linear-gradient(90deg, #FFD700, #FF8C00);
-    color: black;
-    padding: 12px 25px;
+    padding: 8px 15px;
+    margin: 5px;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
+    background: gold;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 10px;
 }
 
-button:hover {
-    opacity: 0.9;
+.storage-bar {
+    width: 80%;
+    height: 15px;
+    background: #333;
+    margin: 15px auto;
+    border-radius: 10px;
+}
+
+#storageFill {
+    height: 100%;
+    width: 0%;
+    background: lime;
+    border-radius: 10px;
+}
+
+.folder {
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    animation: slideUp 0.5s ease-in-out;
 }
 
 footer {
-    margin-top: 25px;
+    margin-top: 30px;
     font-size: 12px;
-    color: #aaa;
+    opacity: 0.7;
+}
+
+@keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+@keyframes slideUp {
+    from {transform:translateY(20px); opacity:0;}
+    to {transform:translateY(0); opacity:1;}
 }
